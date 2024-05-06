@@ -1,0 +1,13 @@
+output   = "internal/shared/models"
+wipe     = true
+no-tests = true
+add-enum-types = true
+
+[psql]
+  dbname = "hotel"
+  host   = "localhost"
+  port   = 5434
+  user   = "local"
+  pass   = "local"
+  blacklist = ["migrations", "permission_policies"]
+  sslmode = "disable"
