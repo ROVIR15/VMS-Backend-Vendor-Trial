@@ -1,9 +1,9 @@
 package customHandlers
 
 import (
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/problemDetails"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
-	errorUtils "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/utils/error_utils"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/http_errors/problemDetails"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
+	errorUtils "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/utils/error_utils"
 	"github.com/labstack/echo/v4"
 )
 

@@ -4,9 +4,9 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/eventsource"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/config"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/eventsource"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
 
 	"github.com/go-playground/validator"
 )

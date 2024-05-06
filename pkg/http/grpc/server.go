@@ -4,9 +4,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/config"
-	grpcError "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/interceptors/grpc_error"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/grpc/config"
+	grpcError "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/grpc/interceptors/grpc_error"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
 
 	"emperror.dev/errors"
 	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"

@@ -3,7 +3,7 @@ package pubsub
 import (
 	"context"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 )
 

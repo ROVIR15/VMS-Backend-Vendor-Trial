@@ -7,8 +7,8 @@ import (
 
 	"emperror.dev/errors"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/contracts"
-	defaultLogger "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/default_logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/http_errors/contracts"
+	defaultLogger "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/default_logger"
 )
 
 // CheckErrMessages check for specific messages contains in the error

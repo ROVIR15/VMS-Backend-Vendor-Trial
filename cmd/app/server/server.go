@@ -7,13 +7,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config/infrastructure"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config/service"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/echo4"
-	grpc "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/config"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/config/infrastructure"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/config/service"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/environment"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/echo_server/echo4"
+	grpc "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/grpc"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
 )
 
 type Server struct {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/eventsource"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/eventsource"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	cecontext "github.com/cloudevents/sdk-go/v2/context"
 	uuid "github.com/satori/go.uuid"

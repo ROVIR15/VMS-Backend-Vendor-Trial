@@ -1,8 +1,8 @@
 package empty
 
 import (
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/models"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/models"
 )
 
 type emptyLogger struct{}

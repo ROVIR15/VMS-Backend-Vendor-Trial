@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"reflect"
 
-	defaultLogger "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/default_logger"
-	reflectionHelper "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/reflection/reflection_helper"
+	defaultLogger "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/default_logger"
+	reflectionHelper "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/reflection/reflection_helper"
 
 	"emperror.dev/errors"
 	"github.com/ahmetb/go-linq/v3"

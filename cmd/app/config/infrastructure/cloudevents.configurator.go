@@ -2,7 +2,7 @@ package infrastructure
 
 import (
 	"emperror.dev/errors"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/eventsource"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/eventsource"
 )
 
 func (ic *infrastructureConfigurator) configCloudevents() (*eventsource.CloudEventsClient, error) {

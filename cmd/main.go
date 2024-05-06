@@ -4,14 +4,14 @@ import (
 	"flag"
 	"log"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/server"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
-	defaultLogger "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/default_logger"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/logrous"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/models"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/zap"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/config"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/server"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/environment"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
+	defaultLogger "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/default_logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/logrous"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/models"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/zap"
 )
 
 func main() {

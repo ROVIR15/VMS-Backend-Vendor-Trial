@@ -3,9 +3,9 @@ package echoServer
 import (
 	"context"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/config"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/environment"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/echo_server/config"
+	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
 
 	"github.com/labstack/echo/v4"
 )

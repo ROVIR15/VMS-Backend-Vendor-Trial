@@ -1,4 +1,4 @@
-module github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service
+module github.com/ROVIR15/VMS-Backend-Vendor-Trial
 
 go 1.21
 

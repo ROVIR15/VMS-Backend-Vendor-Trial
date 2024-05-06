@@ -1,6 +1,6 @@
 package config
 
-import "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/models"
+import "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/models"
 
 type LogOptions struct {
 	LogLevel      string         `mapstructure:"level"`
