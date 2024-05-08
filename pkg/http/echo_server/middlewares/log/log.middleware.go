@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
 
 	"github.com/labstack/echo/v4"
 )

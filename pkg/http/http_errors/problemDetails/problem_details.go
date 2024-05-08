@@ -9,9 +9,9 @@ import (
 
 	"emperror.dev/errors"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/http_errors/contracts"
-	defaultLogger "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/default_logger"
-	typeMapper "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/reflection/type_mapper"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/contracts"
+	defaultLogger "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/default_logger"
+	typeMapper "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/reflection/type_mapper"
 )
 
 const (

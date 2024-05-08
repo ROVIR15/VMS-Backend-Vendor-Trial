@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/grpc/config"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/config"
 
 	"emperror.dev/errors"
 	"google.golang.org/grpc"

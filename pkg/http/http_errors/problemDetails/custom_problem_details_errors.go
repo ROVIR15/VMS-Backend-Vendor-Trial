@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/constants"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/constants"
 )
 
 func NewValidationProblemDetail(detail string, stackTrace string) ProblemDetailErr {

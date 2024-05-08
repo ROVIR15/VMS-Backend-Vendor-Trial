@@ -3,11 +3,11 @@ package logrous
 import (
 	"os"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/constants"
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/environment"
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger"
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/config"
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/models"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/constants"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/config"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/models"
 
 	"github.com/nolleh/caption_json_formatter"
 	"github.com/sirupsen/logrus"

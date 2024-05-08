@@ -3,7 +3,7 @@ package grpcErrors
 import (
 	"time"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/constants"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/constants"
 
 	"google.golang.org/grpc/codes"
 )

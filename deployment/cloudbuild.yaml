@@ -1,0 +1,148 @@
+steps:
+  # - name: 'gcr.io/cloud-builders/git'
+  #   secretEnv: ['SSH_KEY']
+  #   entrypoint: 'bash'
+  #   args:
+  #   - -c
+  #   - |
+  #     echo "$$SSH_KEY" >> /root/.ssh/id_rsa
+  #     chmod 400 /root/.ssh/id_rsa
+  #     cp builds/known_hosts.github /root/.ssh/known_hosts
+  #   volumes:
+  #   - name: 'ssh'
+  #     path: /root/.ssh
+
+  # - id: 'unshallow'
+  #   name: gcr.io/cloud-builders/git  
+  #   entrypoint: 'bash'
+  #   args: 
+  #   - -c 
+  #   - |
+  #     git remote set-url origin "git@github.com:$REPO_FULL_NAME.git"
+  #     git fetch --unshallow
+  #   volumes:
+  #   - name: 'ssh'
+  #     path: /root/.ssh
+
+  # - id: 'check-diff'
+  #   name: gcr.io/cloud-builders/gcloud
+  #   entrypoint: /bin/bash
+  #   volumes:
+  #     - name: 'ephemeral'
+  #       path: '/tmp'
+  #   args:
+  #     - -c
+  #     - |
+  #       bash ./builds/delta-changes.sh "$PROJECT_ID" "$TRIGGER_NAME" "$BUILD_ID" "$COMMIT_SHA" "$TRIGGER_NAME" "/tmp/diff.txt" "$_PREVIOUS_COMMIT_SHA"  || exit 1
+        
+  - id: install-ko
+    name: golang:1.22
+    entrypoint: /bin/bash
+    args:
+      - -c
+      - |
+        go install github.com/google/ko@latest
+    volumes:
+      - name: 'binary'
+        path: '/go/bin'
+
+  - id: build-service
+    name: golang:1.22
+    entrypoint: /bin/bash
+    args:
+      - -c 
+      - |
+        ko build --tags $SHORT_SHA,latest --bare ./cmd > /tmp/service-image.txt
+    env:
+      - KO_DOCKER_REPO=${_GAR_REPO_URL}/${_SERVICE}
+      - KO_CONFIG_PATH=build/deploy/ko.yaml
+      - VERSION=$SHORT_SHA
+    volumes:
+      - name: 'binary'
+        path: '/go/bin'
+      - name: 'ephemeral'
+        path: '/tmp'
+    waitFor: ["install-ko"]
+  
+  # backup milti region
+  # commit_sha 40char < 140 char
+  # - id: backup
+  #   name: 'gcr.io/cloud-builders/gcloud'
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - -c
+  #     - |
+  #       DIFF=$(cat /tmp/diff.txt | grep -o "database\/migration\/[_a-zA-Z0-9-]*")
+  #       if [[ $$DIFF ]]; then 
+  #         gcloud sql backups create --location asia -i ${_DB_INSTANCE_ID} \
+  #           --description "Before applying commit: $COMMIT_SHA" || exit 1
+  #       else
+  #         echo "No migration change found. Skip backup" 
+  #       fi
+  #   volumes:
+  #     - name: 'ephemeral'
+  #       path: '/tmp'
+  #   waitFor: ["check-diff"]
+
+  # Wargning 
+  # _BUILD_SCOPE == 'BUILD_IMAGE' will skip applying migration but build will pass.
+  # So we have to deploy and run job manually if a commit include migration.
+  # Next build pipeline might ignore migration and deploy in case next commit doesnt' include migration file changes. 
+  # - id: migration
+  #   name: 'gcr.io/cloud-builders/gcloud'
+  #   entrypoint: /bin/bash
+  #   args:
+  #     - -c
+  #     - |
+  #       if [[ ${_BUILD_SCOPE} != 'BUILD_IMAGE' ]] && cat /tmp/diff.txt | grep -o "database\/migration\/[_a-zA-Z0-9-]*"; then
+  #         echo "Detect migration file changes"
+  #         gcloud beta run jobs deploy ${_RUN_JOB_NAME} \
+  #           --image $(cat /tmp/db-cli-image.txt) --task-timeout 120s \
+  #           --region ${_REGION} \
+  #           --args '' || exit 1
+  #         gcloud beta run jobs execute ${_RUN_JOB_NAME} --region ${_REGION} || exit 1 
+  #       else
+  #         echo "No migration change found or scope is ${_BUILD_SCOPE}. Skip migration" 
+  #       fi
+  #   volumes:
+  #     - name: 'ephemeral'
+  #       path: '/tmp'
+  #   waitFor: ["build-db-cli","check-diff", "backup"]
+  
+  - id: deploy-service
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: /bin/bash
+    args:
+      - -c 
+      - |
+        if [[ ${_BUILD_SCOPE} != 'BUILD_IMAGE' ]]; then
+          gcloud run deploy ${_RUN_SERVICE_NAME}-${_SERVICE} --image $(cat /tmp/service-image.txt) \
+            --region ${_REGION} || exit 1
+        else
+          echo "Deploy is skipped because of ${_BUILD_SCOPE}"
+        fi
+    volumes:
+      - name: 'ephemeral'
+        path: '/tmp'
+    # waitFor: ["build-service", "migration"]
+    waitFor: ["build-service"]
+
+substitutions:
+  _GAR_REPO_URL: 
+  _GITHUB_DEPLOY_KEY_NAME:
+  # _DB_INSTANCE_ID:
+  _RUN_SERVICE_NAME: prime-backend
+  _SERVICE: 
+  _REGION: asia-northeast1
+  # OUT OF TERRAFORM SCOPE
+  _PREVIOUS_COMMIT_SHA: 
+  _BUILD_SCOPE: 'BUILD_IMAGE'
+
+
+# availableSecrets:
+#   secretManager:
+#   - versionName: projects/$PROJECT_ID/secrets/${_GITHUB_DEPLOY_KEY_NAME}/versions/latest
+#     env: 'SSH_KEY'
+
+options:
+  machineType: 'UNSPECIFIED'

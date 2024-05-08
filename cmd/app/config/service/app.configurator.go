@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/cmd/app/config/infrastructure"
-	echoServer "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/echo_server"
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/grpc"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config/infrastructure"
+	echoServer "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc"
 
 	"github.com/labstack/echo/v4"
 )

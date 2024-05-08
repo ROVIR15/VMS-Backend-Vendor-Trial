@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	customErrors "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/http_errors/custom_errors"
+	customErrors "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/custom_errors"
 
 	"emperror.dev/errors"
 	"github.com/stretchr/testify/assert"

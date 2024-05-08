@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/http/http_errors/contracts"
-	errorUtils "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/utils/error_utils"
+	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/contracts"
+	errorUtils "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/utils/error_utils"
 
 	"emperror.dev/errors"
 	"github.com/stretchr/testify/assert"

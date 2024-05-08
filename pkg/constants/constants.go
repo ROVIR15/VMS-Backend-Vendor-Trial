@@ -33,6 +33,7 @@ const (
 	WriteTimeout         = 15 * time.Second
 	GzipLevel            = 5
 	WaitShutDownDuration = 3 * time.Second
+	Local                = "local"
 	Dev                  = "dev"
 	Staging              = "staging"
 	Production           = "production"

@@ -1,6 +1,6 @@
 package logger
 
-import "github.com/ROVIR15/VMS-Backend-Vendor-Trial/pkg/logger/models"
+import "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/models"
 
 type Fields map[string]interface{}
 
