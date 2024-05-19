@@ -7,13 +7,14 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config/infrastructure"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/cmd/app/config/service"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/echo4"
-	grpc "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/cmd/app/config"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/cmd/app/config/infrastructure"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/cmd/app/config/service"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/environment"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server/echo4"
+	middleware "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server/middlewares/casbin"
+	grpc "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/grpc"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/logger"
 )
 
 type Server struct {
@@ -30,7 +31,21 @@ func (s *Server) Run(e environment.Environment) error {
 	defer stop()
 
 	echoServer := echo4.NewEcho4Server(s.Config.EchoOptions, s.Logger)
+
+	casbinAdapter, err := middleware.NewCasbinAdapter("./pkg/casbin/rest/rbac_model.conf", "./pkg/casbin/rest/rbac_policy.csv")
+	if err != nil {
+		s.Logger.Errorf("[casbin] err: {%v}", err)
+	}
+
+	echoServer.AddMiddlewares(middleware.CasbinMiddleware(casbinAdapter))
+
 	grpcServer := grpc.NewGrpcServer(s.Config.GrpcOptions, s.Logger)
+
+	grpcClient, err := grpc.NewGrpcClient(&s.Config.GrpcClientOptions[0])
+	if err != nil {
+		s.Logger.Errorf("[grpc] err: {%v}", err)
+		return err
+	}
 
 	infrastructureConfigurations, infrastructureCleanupFunc, err := infrastructure.NewInfrastructureConfigurator(s.Logger, s.Config).ConfigInfrastructures(ctx)
 	if err != nil {
@@ -43,6 +58,7 @@ func (s *Server) Run(e environment.Environment) error {
 		infrastructureConfigurations,
 		echoServer,
 		grpcServer,
+		grpcClient,
 	).ConfigureService(ctx); err != nil {
 		s.Logger.Errorf("[service] err: {%v}", err)
 		return err
@@ -58,7 +74,7 @@ func (s *Server) Run(e environment.Environment) error {
 			}
 
 		}()
-		s.Logger.Infof("%s http service is listening on PORT: {%s}", s.Config.AppOptions.GetMicroserviceName(), s.Config.EchoOptions.Port)
+		s.Logger.Infof("%s http service is listening on PORT: {%d}", s.Config.AppOptions.GetMicroserviceName(), s.Config.EchoOptions.Port)
 
 		// run grpc server
 	} else if infrastructureConfigurations.Config.AppOptions.DeliveryType == string(config.GRPC) {
@@ -70,7 +86,7 @@ func (s *Server) Run(e environment.Environment) error {
 				s.Logger.Errorf("[GrpcServer.RunGrpcServer] error in running server: {%v}", err)
 			}
 		}()
-		s.Logger.Infof("%s grpc service is listening on PORT: {%s}", s.Config.AppOptions.GetMicroserviceName(), s.Config.GrpcOptions.Port)
+		s.Logger.Infof("%s grpc service is listening on PORT: {%d}", s.Config.AppOptions.GetMicroserviceName(), s.Config.GrpcOptions.Port)
 	}
 
 	// wait for signal to shutdown
