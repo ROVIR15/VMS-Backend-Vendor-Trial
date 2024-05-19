@@ -3,7 +3,7 @@ package eventsource
 import "context"
 
 type EventPublisher interface {
-	PublishEvent(ctx context.Context, topic, eventType string, data interface{}) error
+	PublishEvent(ctx context.Context, topic, eventType, eventID string, data interface{}) error
 }
 
 type EventSubscriber interface {

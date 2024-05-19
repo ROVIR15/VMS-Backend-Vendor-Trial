@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/constants"
-	pgOptions "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/db/config"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
-	eSO "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/eventsource/config"
-	echoOptions "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/config"
-	grpcOptions "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/config"
-	logOptions "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/config"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/constants"
+	pgOptions "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/db/config"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/environment"
+	eSO "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/eventsource/config"
+	echoOptions "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server/config"
+	grpcOptions "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/grpc/config"
+	logOptions "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/logger/config"
 
 	"emperror.dev/errors"
-	"github.com/caarlos0/env/v8"
+	"github.com/caarlos0/env/v11"
 	"github.com/spf13/viper"
 )
 
@@ -25,12 +25,13 @@ func init() {
 }
 
 type Config struct {
-	AppOptions         *AppOptions              `mapstructure:"appOptions" env:"AppOptions"`
-	LogOptions         *logOptions.LogOptions   `mapstructure:"logOptions" env:"LogOptions"`
-	EchoOptions        *echoOptions.EchoOptions `mapstructure:"echoOptions" env:"EchoOptions"`
-	GrpcOptions        *grpcOptions.GrpcOptions `mapstructure:"grpcOptions" env:"GrpcOptions"`
-	PgOptions          *pgOptions.PgOptions     `mapstructure:"pgOptions" env:"pgOptions"`
-	EventSourceOptions *eSO.EventSourceOptions  `mapstructure:"eventSourceOptions" env:"EventSourceOptions"`
+	AppOptions         *AppOptions               `mapstructure:"appOptions"`
+	LogOptions         *logOptions.LogOptions    `mapstructure:"logOptions"`
+	EchoOptions        *echoOptions.EchoOptions  `mapstructure:"echoOptions"`
+	GrpcOptions        *grpcOptions.GrpcOptions  `mapstructure:"grpcOptions"`
+	PgOptions          *pgOptions.PgOptions      `mapstructure:"pgOptions"`
+	EventSourceOptions *eSO.EventSourceOptions   `mapstructure:"eventSourceOptions"`
+	GrpcClientOptions  []grpcOptions.GrpcOptions `mapstructure:"grpcClientOptions"`
 }
 
 func GetServiceConfigurations(environments ...environment.Environment) (*Config, error) {
@@ -39,7 +40,7 @@ func GetServiceConfigurations(environments ...environment.Environment) (*Config,
 	if len(environments) > 0 {
 		environment = environments[0]
 	} else {
-		environment = constants.Dev
+		environment = constants.Local
 	}
 
 	if configPath == "" {
@@ -55,7 +56,7 @@ func GetServiceConfigurations(environments ...environment.Environment) (*Config,
 	//https://github.com/spf13/viper/issues/390#issuecomment-718756752
 	viper.SetConfigName(fmt.Sprintf("config.%s", environment))
 	viper.AddConfigPath(configPath)
-	viper.SetConfigType(constants.Json)
+	viper.SetConfigType(constants.Yaml)
 
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, errors.Wrap(err, "viper.ReadInConfig")

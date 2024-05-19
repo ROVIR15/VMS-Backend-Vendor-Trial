@@ -3,7 +3,7 @@ package interactor
 import (
 	"reflect"
 
-	reflectionHelper "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/reflection/reflection_helper"
+	reflectionHelper "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/reflection/reflection_helper"
 )
 
 type sharedUsecaseContainer struct {

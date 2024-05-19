@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	defaultLogger "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger/default_logger"
+	defaultLogger "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/logger/default_logger"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

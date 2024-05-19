@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	"emperror.dev/errors"
-	db "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/db"
+	db "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/db"
 )
 
 func (ic *infrastructureConfigurator) configDatabase() (*sql.DB, func(), error) {

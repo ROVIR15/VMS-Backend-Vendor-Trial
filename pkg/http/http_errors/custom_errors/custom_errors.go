@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/contracts"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/http_errors/contracts"
 
 	"emperror.dev/errors"
 )

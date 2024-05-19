@@ -4,9 +4,10 @@ import (
 	"net"
 	"time"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/config"
-	grpcError "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/interceptors/grpc_error"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/grpc/config"
+	grpcError "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/grpc/interceptors/grpc_error"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/utils"
 
 	"emperror.dev/errors"
 	grpcMiddleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -89,7 +90,7 @@ func NewGrpcServer(
 func (s *grpcServer) RunGrpcServer(
 	configGrpc ...func(grpcServer *googleGrpc.Server),
 ) error {
-	l, err := net.Listen("tcp", s.config.Port)
+	l, err := net.Listen("tcp", utils.ColonPort(s.config.Port))
 	if err != nil {
 		return errors.WrapIf(err, "net.Listen")
 	}

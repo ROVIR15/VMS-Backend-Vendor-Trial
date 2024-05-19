@@ -1,9 +1,10 @@
 package config
 
 type EventSourceOptions struct {
-	GCPProjectID        string               `mapstructure:"gcpProjectID"`
-	TopicOptions        []TopicOption        `mapstructure:"topics"`
-	SubscriptionOptions []SubscriptionOption `mapstructure:"subscriptions"`
+	GCPProjectID        string                 `mapstructure:"gcpProjectID"`
+	Source              string                 `mapstructure:"source"`
+	TopicOptions        map[string]TopicOption `mapstructure:"topics"`
+	SubscriptionOptions []SubscriptionOption   `mapstructure:"subscriptions"`
 }
 
 type SubscriptionOption string

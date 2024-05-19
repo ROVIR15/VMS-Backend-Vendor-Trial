@@ -2,48 +2,66 @@ package pubsub
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/eventsource"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/eventsource"
+	esConfig "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/eventsource/config"
+	esConstants "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/eventsource/constants"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/logger"
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	cecontext "github.com/cloudevents/sdk-go/v2/context"
-	uuid "github.com/satori/go.uuid"
 )
 
 type EventPublisher struct {
-	logger logger.Logger
-	client *eventsource.CloudEventsClient
+	logger       logger.Logger
+	client       *eventsource.CloudEventsClient
+	source       string
+	topicOptions map[string]esConfig.TopicOption
 }
 
-func NewEventPublisher(logger logger.Logger, client *eventsource.CloudEventsClient) *EventPublisher {
+var _ eventsource.EventPublisher = (*EventPublisher)(nil)
+
+func NewEventPublisher(logger logger.Logger, client *eventsource.CloudEventsClient, source string, topicOptions map[string]esConfig.TopicOption) *EventPublisher {
 	return &EventPublisher{
-		logger: logger,
-		client: client,
+		logger:       logger,
+		client:       client,
+		source:       source,
+		topicOptions: topicOptions,
 	}
 }
 
-func (ep *EventPublisher) PublishEvent(ctx context.Context, topic, eventType string, data interface{}) error {
+func (ep *EventPublisher) PublishEvent(ctx context.Context, topic, eventType, eventID string, data interface{}) error {
 	event := cloudevents.NewEvent()
-	event.SetType(eventType)
-	event.SetID(uuid.NewV4().String())
-	event.SetSource("deltahq-hotel-service")
+	// Set the event context
+	event.SetSpecVersion(cloudevents.VersionV1)
+	event.SetSource(ep.source)
+	event.SetID(eventID)
+	event.SetType(esConstants.DeltaHQEventType + eventType)
 
+	// Set the event data
 	if err := event.SetData(cloudevents.ApplicationJSON, data); err != nil {
 		ep.logger.Errorf("failed to set data: %v", err)
 		return err
 	}
 
-	fmt.Println("debug", event)
-	sendCtx := cecontext.WithTopic(ctx, topic)
+	eventTopic := ep.getTopic(topic)
+
+	sendCtx := cecontext.WithTopic(ctx, eventTopic)
 
 	result := ep.client.Send(sendCtx, event)
 	if cloudevents.IsUndelivered(result) {
-		ep.logger.Printf("failed to send: %v", result)
+		ep.logger.Printf("failed to send event: %v", result)
 		return result
 	} else {
 		ep.logger.Printf("sent, accepted: %t", cloudevents.IsACK(result))
 	}
 
 	return nil
+}
+
+func (ep *EventPublisher) getTopic(topic string) string {
+	if topicOption, ok := ep.topicOptions[topic]; ok {
+		return topicOption.String()
+	}
+
+	return topic
 }

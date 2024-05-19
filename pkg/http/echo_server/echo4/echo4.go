@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/constants"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/environment"
-	echoServer "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/config"
-	customHandlers "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/handlers"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/echo_server/middlewares/log"
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/constants"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/environment"
+	echoServer "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server/config"
+	customHandlers "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server/handlers"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/echo_server/middlewares/log"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/logger"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/utils"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"golang.org/x/crypto/acme/autocert"
 )
 
 type echo4Server struct {
@@ -61,18 +61,20 @@ func (s *echo4Server) RunHttpServer(
 	// setup default middlewares
 	s.SetupDefaultMiddlewares()
 
-	if e.IsStaging() || e.IsProduction() {
-		s.log.Infow("[ECHO] use tls", logger.Fields{"IsTLS": true})
-		s.echo.AutoTLSManager.Cache = autocert.DirCache(s.options.TLSCacheDir)
-		s.echo.AutoTLSManager.HostPolicy = autocert.HostWhitelist(s.options.TLSHosts...)
+	return s.echo.Start(utils.ColonPort(s.options.Port))
 
-		s.echo.Use(middleware.HTTPSRedirect())
+	// if e.IsStaging() || e.IsProduction() {
+	// 	s.log.Infow("[ECHO] use tls", logger.Fields{"IsTLS": true})
+	// 	s.echo.AutoTLSManager.Cache = autocert.DirCache(s.options.TLSCacheDir)
+	// 	s.echo.AutoTLSManager.HostPolicy = autocert.HostWhitelist(s.options.TLSHosts...)
 
-		return s.echo.StartAutoTLS(s.options.Port)
-	} else {
-		// https://echo.labstack.com/guide/http_server/
-		return s.echo.Start(s.options.Port)
-	}
+	// 	s.echo.Use(middleware.HTTPSRedirect())
+
+	// 	return s.echo.StartAutoTLS(utils.ColonPort(s.options.Port))
+	// } else {
+	// 	// https://echo.labstack.com/guide/http_server/
+	// 	return s.echo.Start(utils.ColonPort(s.options.Port))
+	// }
 }
 
 func (s *echo4Server) Logger() logger.Logger {

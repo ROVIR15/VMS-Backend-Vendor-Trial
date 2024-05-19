@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/grpc/grpcErrors"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/grpc/grpcErrors"
 
 	"google.golang.org/grpc"
 )

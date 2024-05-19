@@ -4,9 +4,9 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/constants"
-	customErrors "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/http/http_errors/custom_errors"
-	errorUtils "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/utils/error_utils"
+	"github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/constants"
+	customErrors "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/http/http_errors/custom_errors"
+	errorUtils "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/utils/error_utils"
 
 	"emperror.dev/errors"
 	"github.com/go-playground/validator"

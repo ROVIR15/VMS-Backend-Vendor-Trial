@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	option "github.com/ILUMINA-Pte-Ltd/PrimeCRM-Backend-Service/pkg/db/config"
+	option "github.com/ILUMINA-Pte-Ltd/VMS-Backend-Vendor-Trial/pkg/db/config"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 
 	_ "github.com/jackc/pgx/v5/stdlib"

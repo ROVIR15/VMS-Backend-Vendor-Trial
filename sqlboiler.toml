@@ -4,9 +4,9 @@ no-tests = true
 add-enum-types = true
 
 [psql]
-  dbname = "hotel"
+  dbname = "goose_trial_migrations"
   host   = "localhost"
-  port   = 5434
+  port   = 5432
   user   = "local"
   pass   = "local"
   blacklist = ["migrations", "permission_policies"]

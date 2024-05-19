@@ -26,6 +26,7 @@ const (
 	DefaultConfigPath    = "./cmd/app/config"
 	Offline              = "offline"
 	Json                 = "json"
+	Yaml                 = "yaml"
 	Name                 = "NAME"
 	MaxHeaderBytes       = 1 << 20
 	BodyLimit            = "2M"
@@ -33,7 +34,8 @@ const (
 	WriteTimeout         = 15 * time.Second
 	GzipLevel            = 5
 	WaitShutDownDuration = 3 * time.Second
-	Dev                  = "dev"
+	Local                = "local"
+	Dev                  = "development"
 	Staging              = "staging"
 	Production           = "production"
 )

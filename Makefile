@@ -1,24 +1,29 @@
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
 .DEFAULT_GOAL := help
 
 init-install-tools: ## install tools
 	go install github.com/volatiletech/sqlboiler/v4@latest && \
 	go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql@latest && \
 	go get -u -t github.com/vattle/sqlboiler && \
-	go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+	go install github.com/pressly/goose/v3/cmd/goose@latest
 
-migrateadd: ## database migration: add new migration file
-	migrate create -ext sql -dir migrations $(name)
+migrate-create: ## database migration: add new migration file need to pass name="migration name" e.g. make migrateadd name="create_users_table"
+	goose create $(name) sql
 
-migrateup: ## database migration up
-	migrate -path migrations -database "postgresql://local:local@localhost:5434/hotel?sslmode=disable" -verbose up
+migrate-status: ## database migration: status
+	goose status
 
-migratedown: ## database migration down
-	migrate -path migrations -database "postgresql://local:local@localhost:5434/hotel?sslmode=disable" -verbose down
+migrate-up: ## migrate database up to the most recent version available
+	goose validate -v
+	goose up -v
 
-migrate-refresh: ## alias for migratedown migrateup and seed
-	make migratedown
-	make migrateup
-	make seed
+migrate-down: ## migrate database down roll back the version by 1
+	goose validate -v
+	goose down -v
 
 test: ## go test
 	go test -v ./...
@@ -28,14 +33,8 @@ test-coverage: ## coverage test
 	go tool cover -html coverage.out -o coverage.html
 	open coverage.html
 
-seed:  ## seeding
-	$(MAKE) compose-exec cmd="go run ./cmd/db-cli -seed"
-
-compose-exec: ## wrapper docker compose. use cmd="command"
-	@docker compose exec pms-backend ${cmd}
-
 renew-migration: ## renew migration file. use param="migration name pattern"
-	@find migrations -type f -name "*$(param)*.sql" | sort > result.txt
+	@find migrations -type f -name "*$(param).sql" | sort > result.txt
 	DOWN_CONTENT=""; \
 	UP_CONTENT=""; \
 	while IFS= read -r file; do \
